@@ -29,3 +29,5 @@ Thumbs.db
 # Jupyter / Anaconda generated files
 .virtual_documents/
 anaconda_projects/
+
+run_app.bat

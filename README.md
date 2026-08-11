@@ -372,6 +372,20 @@ Using a single pipeline ensures that the same preprocessing used during training
 
 The trained pipeline is integrated into an interactive Streamlit dashboard.
 
+### 📸 Application Preview
+
+#### Customer Dashboard
+
+![Customer Dashboard](screenshots/dashboard.png)
+
+#### Churn Prediction
+
+![Churn Prediction](screenshots/prediction.png)
+
+#### Business Insights
+
+![Business Insights](screenshots/insights.png)
+
 The application allows users to enter:
 
 * Customer demographics
