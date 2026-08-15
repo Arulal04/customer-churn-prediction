@@ -386,6 +386,47 @@ The trained pipeline is integrated into an interactive Streamlit dashboard.
 
 ![Business Insights](screenshots/insights.png)
 
+### 📁 Batch CSV Prediction
+
+The application also supports batch churn prediction through CSV uploads.
+
+Users can:
+
+- Upload a customer CSV file
+- Validate required customer features
+- Automatically handle invalid numerical values
+- Generate churn predictions for multiple customers
+- Calculate churn probabilities
+- Classify customers into Low, Medium, and High Risk
+- View churn and risk-distribution charts
+- Identify high-risk customers
+- Download complete prediction results
+- Download only high-risk customers
+- Download a CSV template for new predictions
+
+### Batch Prediction Workflow
+
+```text
+CSV Upload
+    ↓
+Column Validation
+    ↓
+Data Cleaning
+    ↓
+ML Pipeline
+    ↓
+Churn Prediction
+    ↓
+Churn Probability
+    ↓
+Risk Classification
+    ↓
+Business Summary
+    ↓
+High-Risk Customer List
+    ↓
+Download Results
+
 The application allows users to enter:
 
 * Customer demographics
