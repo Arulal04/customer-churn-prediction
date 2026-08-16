@@ -520,23 +520,29 @@ pip install -r requirements.txt
 
 ---
 
+
+```markdown
 ## ▶️ Run the Streamlit Application
 
-Run:
-
-```bash
-streamlit run app.py
-```
-
-The application will open in your browser.
-
-If Streamlit is installed in a specific Python environment, you can also run:
+Run the application using:
 
 ```bash
 python -m streamlit run app.py
-```
 
----
+The application will open in your default web browser.
+
+📁 Using Batch CSV Prediction
+
+The application supports batch prediction for multiple customers.
+
+Open the Batch CSV Prediction section.
+Download the CSV Template if you are using your own customer data.
+Fill in the required customer information.
+Upload the CSV file.
+Click Predict Churn for All Customers.
+Review the prediction summary and charts.
+View the High-Risk Customers list.
+Download the complete prediction results or the high-risk customer list.
 
 ## 💡 Business Recommendations
 
@@ -559,8 +565,7 @@ These recommendations are based on predictive patterns and should be validated t
 Potential improvements include:
 
 * Threshold optimization based on business costs
-* SHAP-based model explainability
-* Customer-level explanation of predictions
+* Advanced SHAP-based customer-level explanations
 * Automated retention recommendations
 * Model monitoring and drift detection
 * Deployment using Streamlit Community Cloud
@@ -593,4 +598,10 @@ End-to-end Scikit-learn pipeline
 Feature importance analysis
 Interactive Streamlit dashboard
 Git + GitHub version control
+Batch CSV prediction
+Customer risk classification
+High-risk customer identification
+Downloadable prediction results
+Model explainability
+Responsible-use documentation
 ```
