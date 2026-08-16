@@ -311,59 +311,281 @@ if st.button("Predict Churn", type="primary"):
             f"{probability_percentage:.2f}%"
         )
 
+    if probability >= 0.60:
+        st.caption(
+            "The model estimates a relatively high likelihood of churn "
+            "for this customer based on the information provided."
+        )
+
+    elif probability >= 0.30:
+        st.caption(
+            "The model estimates a moderate likelihood of churn "
+            "for this customer based on the information provided."
+        )
+
+    else:
+        st.caption(
+            "The model estimates a relatively low likelihood of churn "
+            "for this customer based on the information provided."
+        )
+
     st.progress(float(probability))
+
+    if probability >= 0.60:
+        st.error(
+            "🔴 High probability range — this customer should be prioritized "
+            "for retention attention."
+        )
+
+    elif probability >= 0.30:
+        st.warning(
+            "🟡 Moderate probability range — this customer should be monitored."
+        )
+
+    else:
+        st.success(
+            "🟢 Low probability range — no immediate retention action is indicated."
+        )
 
     st.write(f"**Risk Level:** {risk_level}")
 
     st.info(risk_message)
     
-    st.markdown("### 🔎 Important Churn Indicators")
+    if probability >= 0.60:
+        st.markdown("### 🔎 Important Churn Indicators")
+    elif probability >= 0.30:
+        st.markdown("### 🔎 Factors to Monitor")
+    else:
+        st.markdown("### 🔎 Customer Risk Assessment")
 
-indicators = []
+    st.caption(
+        "ℹ️ These indicators are based on observed patterns in the "
+        "training dataset and are not causal explanations of churn."
+    )
 
-if contract == "Month-to-month":
-    indicators.append("Month-to-month contract")
+    risk_factors = []
+    positive_factors = []
 
-if tenure < 12:
-    indicators.append("Short customer tenure")
+    # Risk factors
+    if contract == "Month-to-month":
+        risk_factors.append(
+            "Month-to-month contract"
+        )
 
-if monthly_charges > 70:
-    indicators.append("Higher monthly charges")
+    if tenure < 12:
+        risk_factors.append(
+            "Short customer tenure"
+        )
 
-if internet_service == "Fiber optic":
-    indicators.append("Fiber optic internet service")
+    if monthly_charges > 70:
+        risk_factors.append(
+            "Higher monthly charges"
+        )
 
-if online_security == "No":
-    indicators.append("No online security")
+    if internet_service == "Fiber optic":
+        risk_factors.append(
+            "Fiber optic internet service"
+        )
 
-if tech_support == "No":
-    indicators.append("No technical support")
+    if online_security == "No":
+        risk_factors.append(
+            "No online security"
+        )
 
-if payment_method == "Electronic check":
-    indicators.append("Electronic check payment")
+    if tech_support == "No":
+        risk_factors.append(
+            "No technical support"
+        )
 
-if indicators:
-    for indicator in indicators:
-        st.write(f"• {indicator}")
-else:
-    st.write("No major high-risk indicators identified.")
+    if payment_method == "Electronic check":
+        risk_factors.append(
+            "Electronic check payment"
+        )
+
+    # Positive factors
+    if contract == "Two year":
+        positive_factors.append(
+            "Two-year contract"
+        )
+
+    if contract == "One year":
+        positive_factors.append(
+            "One-year contract"
+        )
+
+    if online_security == "Yes":
+        positive_factors.append(
+            "Online security enabled"
+        )
+
+    if tech_support == "Yes":
+        positive_factors.append(
+            "Technical support enabled"
+        )
+
+    if tenure >= 24:
+        positive_factors.append(
+            "Long customer tenure"
+        )
+
+    # Display risk factors
+    if risk_factors:
+
+        st.markdown("**⚠️ Factors that may increase churn risk**")
+
+        for factor in risk_factors:
+            st.write(f"• {factor}")
+
+    # Display positive factors
+    if positive_factors:
+
+        st.markdown("**✅ Factors associated with lower churn**")
+
+        for factor in positive_factors:
+            st.write(f"• {factor}")
+
+    if not risk_factors and not positive_factors:
+
+        st.write(
+            "No major risk or positive indicators identified "
+            "from the selected customer characteristics."
+        )
+
 
     # Business recommendation
     if probability >= 0.60:
+
         st.warning(
             "💡 Recommendation: Consider prioritizing this customer "
             "for a retention campaign or personalized offer."
         )
+
     elif probability >= 0.30:
+
         st.info(
             "💡 Recommendation: Monitor this customer and consider "
             "a proactive engagement or satisfaction check."
         )
+
     else:
+
         st.success(
             "💡 Recommendation: No immediate retention action is "
             "required based on the current prediction."
         )
+
+st.divider()
+
+st.subheader("🤖 Model Information")
+
+st.write(
+    "The application uses a tuned Random Forest classification "
+    "pipeline to predict customer churn."
+)
+
+model_col1, model_col2, model_col3 = st.columns(3)
+
+with model_col1:
+    st.metric(
+        "ROC-AUC",
+        "84.21%"
+    )
+
+with model_col2:
+    st.metric(
+        "Recall",
+        "77.01%"
+    )
+
+with model_col3:
+    st.metric(
+        "F1 Score",
+        "62.95%"
+    )
+
+st.caption(
+    "Evaluation metrics are based on the held-out test dataset. "
+    "Performance may vary on new customer data."
+)
+
+top_features = pd.DataFrame({
+    "Feature": [
+        "Month-to-month contract",
+        "Customer tenure",
+        "Total charges",
+        "Two-year contract",
+        "No online security",
+        "No technical support",
+        "Monthly charges",
+        "Fiber optic internet",
+        "Electronic check payment"
+    ],
+    "Importance": [
+        0.137940,
+        0.126997,
+        0.087457,
+        0.075408,
+        0.073328,
+        0.060508,
+        0.058937,
+        0.055759,
+        0.037716
+    ]
+})
+
+st.bar_chart(
+    top_features.set_index("Feature")
+)
+
+st.markdown("### 💡 What These Features Mean")
+
+st.write(
+    """
+    The model found that contract type, customer tenure, charges,
+    online security, technical support, internet service, and payment
+    method were among the most useful features for distinguishing
+    customers who churn from those who do not.
+    """
+)
+
+st.caption(
+    "These feature-importance scores describe the model's overall "
+    "behavior across the dataset. They should not be interpreted as "
+    "causal effects or as the probability contribution of an individual feature."
+)
+
+st.caption(
+    "Feature importance indicates how useful each feature was to the "
+    "Random Forest model across the dataset. It does not imply causation "
+    "or represent an individual customer's probability of churn."
+)
+
+st.divider()
+
+st.subheader("⚠️ Limitations & Responsible Use")
+
+st.markdown(
+    """
+    - **Predictions are estimates:** The model predicts churn risk based
+      on patterns learned from historical customer data.
+    
+    - **No causal conclusions:** A feature being important to the model
+      does not mean it causes customer churn.
+    
+    - **Performance may vary:** Model performance on new customer data
+      may differ from the evaluation results obtained on the test dataset.
+    
+    - **Risk thresholds are business-defined:** Low, Medium, and High
+      Risk categories are based on selected probability thresholds and
+      can be adjusted according to business requirements.
+    
+    - **Human judgment is important:** Predictions should support,
+      rather than replace, customer-service and business decisions.
+    
+    - **Data quality matters:** Missing, incorrect, or significantly
+      different customer information can affect prediction quality.
+    """
+)
 
 
 st.divider()
