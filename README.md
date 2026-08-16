@@ -528,6 +528,7 @@ Run the application using:
 
 ```bash
 python -m streamlit run app.py
+```
 
 The application will open in your default web browser.
 
