@@ -30,4 +30,9 @@ Thumbs.db
 .virtual_documents/
 anaconda_projects/
 
+# Local launcher
 run_app.bat
+
+# Environment and secrets
+.env
+*.env
