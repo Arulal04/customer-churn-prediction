@@ -2,6 +2,12 @@
 
 An end-to-end machine learning application that predicts whether a telecom customer is likely to churn and provides actionable customer-risk insights through an interactive Streamlit dashboard.
 
+## 🌐 Live Demo
+
+Try the deployed application here:
+
+[🚀 Customer Churn Prediction System](https://arulal04-customer-churn-prediction-app-t5olbb.streamlit.app/)
+
 ## 🚀 Project Overview
 
 Customer churn is a major challenge for telecom companies because retaining an existing customer is often more valuable than acquiring a new one.
